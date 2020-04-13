@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+        {% if songs %}
+        <table class="table center">
+          <thead>
+            <tr>
+              <td class="col-head">CODE</td>
+              <td class="col-head">TITLE</td>
+              <td class="col-head">ARTIST</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for song in songs %}
+              <tr>
+                <td>{{ song.code }}</td>
+                <td>{{ song.title }}</td>
+                <td>{% for artist in song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+           No songs!
+        {% endif %}
+{% endblock %}

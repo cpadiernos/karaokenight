@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Karaoke Night</title>
+    {% else %}
+    <title>Karaoke Night</title>
+    {% endif %}
+    <meta charset="UTF-8">
+    <meta name="description" content="Karaoke Night">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+  </head>
+  <body>
+  <div>
+    <header>
+      <nav>
+        <ul class="nav">
+          <li><a href="{{ url_for('index') }}">Song List</a></li>
+          <li><a href="#">Queue</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div>
+      <main>
+      {% block content %}
+      {% endblock %}
+      </main>
+    </div>
+      <footer>
+      </footer>
+  <script></script>
+  </div>
+  </body>
+</html>
