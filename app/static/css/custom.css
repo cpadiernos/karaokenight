@@ -48,3 +48,7 @@ table.center {
   display: inline-block;
   padding: 10px;
 }
+
+.message {
+  list-style: none;
+}

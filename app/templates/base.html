@@ -16,12 +16,22 @@
     <header>
       <nav>
         <ul class="nav">
+          <li><a href="{{ url_for('add_song') }}">Add Song</a></li>
           <li><a href="{{ url_for('index') }}">Song List</a></li>
           <li><a href="#">Queue</a></li>
         </ul>
       </nav>
     </header>
     <div>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class="message">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
       <main>
       {% block content %}
       {% endblock %}

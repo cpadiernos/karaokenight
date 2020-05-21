@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Add Song</h1>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.code.label }}: 
+      {{ form.code(size=50) }} <br/>
+      {% for error in form.code.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.title.label }}:
+      {{ form.title(size=50) }} <br/>
+      {% for error in form.title.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.artists.label }}:
+      {{ form.artists(size=50) }} <br/>
+      {% for error in form.artists.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.submit() }}
+    </p>
+  </form>
+{% endblock %}
