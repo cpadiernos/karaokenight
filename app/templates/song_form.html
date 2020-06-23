@@ -18,15 +18,69 @@
       <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </p>
-    <p>
-      {{ form.artists.label }}:
-      {{ form.artists(size=50) }} <br/>
-      {% for error in form.artists.errors %}
+    {{ form.artists.label }}: <br/>
+    {% for subform in form.artists %}
+    <div id="artist-{{ loop.index0 }}-form" class="subform" data-index="{{ loop.index0 }}">
+      {{ subform.form.name.label }}
+      {{ subform.form.name(size=50) }}
+      <button id="delete-button-{{ loop.index0 }}" type="button" onClick="removeArtist(this.id)">Remove</button>
+      <br/>
+      {% for error in subform.form.name.errors %}
       <span style="color: red;">{{ error }}</span>
       {% endfor %}
-    </p>
+      <br/>
+    </div>
+    {% endfor %}
+    <button id="add-button" type="button" onClick="addArtist()">Add</button>
     <p>
       {{ form.submit() }}
     </p>
   </form>
+  <script>
+  var subform = document.getElementsByClassName('subform')[0];
+  
+  function addArtist() {
+    var addButton = document.getElementById('add-button');
+    
+    var form = document.getElementsByTagName('form');
+    
+    var prevElement = addButton.previousElementSibling;
+    
+    if (prevElement.tagName == 'BR') {
+      var artist = subform;
+      artist.getElementsByTagName('input')[0].value = '';
+    
+    } else {
+      var artist = addButton.previousElementSibling.cloneNode(true);
+      var index = artist.getAttribute('data-index');
+      var newIndex = parseInt(index,10) + 1;
+      var newId = artist.getAttribute('id').replace(index, newIndex);
+      artist.setAttribute('id', newId);
+      artist.setAttribute('data-index', newIndex);
+      
+      var label = artist.getElementsByTagName('label')[0];
+      var newName = label.getAttribute('for').replace(index, newIndex);
+      label.setAttribute('for', newName);
+      
+      var input = artist.getElementsByTagName('input')[0];
+      input.setAttribute('id', newName);
+      input.setAttribute('name', newName);
+      input.value = '';
+      
+      var button = artist.getElementsByTagName('button')[0];
+      var newButtonId = button.getAttribute('id').replace(index, newIndex)
+      button.setAttribute('id', newButtonId)
+    }
+
+    form[0].insertBefore(artist, addButton);
+  }
+  
+  function removeArtist(id) {
+    var deleteButton = document.getElementById(id);
+    var artist = deleteButton.parentElement
+    var form = artist.parentElement
+    form.removeChild(artist)
+  }
+  
+  </script>
 {% endblock %}

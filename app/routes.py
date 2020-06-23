@@ -15,9 +15,8 @@ def add_song():
     form = SongForm()
     if form.validate_on_submit():
         song = Song(code=form.code.data, title=form.title.data)
-        artist_list = form.artists.data.split(',')
-        artists = [artist.strip() for artist in artist_list]
-        for name in artists:
+        names = [artist['name']for artist in form.artists.data]
+        for name in names:
             artist = Artist.query.filter_by(name=name).first()
             if artist:
                 song.artists.append(artist)

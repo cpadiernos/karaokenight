@@ -1,12 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import Form, FormField, StringField, SubmitField, FieldList
 from wtforms.validators import DataRequired, ValidationError
 from app.models import Artist, Song
 
+class ArtistForm(Form):
+    name = StringField('Name', validators=[DataRequired()])
+    
 class SongForm(FlaskForm):
     code = StringField('Code',validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
-    artists = StringField('Artist(s)', validators=[DataRequired()])
+    artists = FieldList(FormField(ArtistForm), min_entries=1)
     submit = SubmitField('Submit')
     
     def validate_code(self, code):
