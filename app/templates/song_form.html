@@ -23,7 +23,7 @@
     <div id="artist-{{ loop.index0 }}-form" class="subform" data-index="{{ loop.index0 }}">
       {{ subform.form.name.label }}
       {{ subform.form.name(size=50) }}
-      <button id="delete-button-{{ loop.index0 }}" type="button" onClick="removeArtist(this.id)">Remove</button>
+      <button id="delete-button-{{ loop.index0 }}" type="button" class="remove-btn">Remove</button>
       <br/>
       {% for error in subform.form.name.errors %}
       <span style="color: red;">{{ error }}</span>
@@ -31,12 +31,24 @@
       <br/>
     </div>
     {% endfor %}
-    <button id="add-button" type="button" onClick="addArtist()">Add</button>
+    <button id="add-button" type="button">Add</button>
     <p>
       {{ form.submit() }}
     </p>
   </form>
   <script>
+  document.addEventListener('click', function (event) {
+    if (!event.target.matches('.remove-btn')) return;
+    event.preventDefault();
+    removeArtist(event.target.id);
+  }, false);
+  
+  document.addEventListener('click', function (event) {
+    if (!event.target.matches('#add-button')) return;
+    event.preventDefault();
+    addArtist();
+  }, false);
+  
   var subform = document.getElementsByClassName('subform')[0];
   
   function addArtist() {
