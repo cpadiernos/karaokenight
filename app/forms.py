@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, FormField, StringField, SubmitField, FieldList
+from wtforms import Form, FormField, StringField, SubmitField, FieldList, HiddenField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import Artist, Song
 
@@ -16,3 +16,8 @@ class SongForm(FlaskForm):
         code = Song.query.filter_by(code=code.data).first()
         if code is not None:
             raise ValidationError('This code is already in the song book.')
+            
+class PerformanceForm(FlaskForm):
+    code = HiddenField()
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Submit')
