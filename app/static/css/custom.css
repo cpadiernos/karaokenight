@@ -87,3 +87,7 @@ table.center {
   text-decoration: none;
   cursor: pointer;
 }
+
+.error {
+  color: red;
+}

@@ -37,7 +37,7 @@
                   {{ form.name.label }}: 
                   {{ form.name(size=50) }} <br/>
                   {% for error in form.name.errors %}
-                  <span style="color: red;">{{ error }}</span>
+                  <span id="err-msg" class="error">{{ error }}</span>
                   {% endfor %}
                 </p>
                 <p>
@@ -58,14 +58,26 @@
           codeField.value = event.target.getAttribute('data-code');
         }, false);
         
+        function removeErrMsg() {
+          if (document.getElementById("err-msg")) {
+            document.getElementById("err-msg").parentNode.removeChild(document.getElementById("err-msg"))
+          }
+        }
+        
         span.onclick = function() {
           modal.style.display = "none";
+          removeErrMsg();
         }
         
         window.onclick = function(event) {
           if (event.target == modal) {
             modal.style.display = "none";
+            removeErrMsg();
           }
+        }
+        
+        if (document.getElementById("err-msg")) {
+          modal.style.display = "block"
         }
         
         </script>
