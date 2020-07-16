@@ -36,3 +36,8 @@ def add_song():
         flash('"{}" by {} - added.'.format(song.title, ', '.join([artist.name for artist in song.artists])))
         return redirect(url_for('index'))
     return render_template('song_form.html', title='Add Song', form=form)
+    
+@app.route('/performances/')
+def view_performances():
+    performances = Performance.query.all()
+    return render_template('performance_list.html', performances=performances)
