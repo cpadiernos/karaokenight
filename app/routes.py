@@ -41,3 +41,10 @@ def add_song():
 def view_performances():
     performances = Performance.query.all()
     return render_template('performance_list.html', performances=performances)
+    
+@app.route('/performances/<id>/delete/', methods=['POST'])
+def delete_performance(id):
+    performance = Performance.query.filter_by(id=id).first()
+    db.session.delete(performance)
+    db.session.commit()
+    return redirect(url_for('view_performances'))

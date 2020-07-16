@@ -9,6 +9,7 @@
               <td class="col-head">TITLE</td>
               <td class="col-head">ARTIST</td>
               <td class="col-head">PERFORMER</td>
+              <td class="col-head"></td>
             </tr>
           </thead>
           <tbody>
@@ -18,6 +19,11 @@
                 <td>{{ performance.song.title }}</td>
                 <td>{% for artist in performance.song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
                 <td>{{ performance.name }}</td>
+                <td>
+                <form action="/performances/{{ performance.id }}/delete/" method="post">
+                  <button type="submit">Delete</button>
+                </form>
+                </td>
               </tr>
             {% endfor %}
           </tbody>
