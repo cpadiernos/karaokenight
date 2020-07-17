@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, FormField, StringField, SubmitField, FieldList, HiddenField
+from wtforms import PasswordField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import Artist, Song
 
@@ -21,3 +22,8 @@ class PerformanceForm(FlaskForm):
     code = HiddenField()
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Submit')
+    
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Sign In')

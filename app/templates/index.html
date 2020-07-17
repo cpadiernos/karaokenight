@@ -17,7 +17,14 @@
                 <td>{{ song.code }}</td>
                 <td>{{ song.title }}</td>
                 <td>{% for artist in song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                {% if current_user.is_authenticated %}
+                <td>
+                  <button data-code="{{ song.code }}" id="{{ song.code }}-edit" class="edit-btn">Edit</button>
+                  <button data-code="{{ song.code }}" id="{{ song.code }}-delete" class="delete-btn">Delete</button>
+                </td>
+                {% else %}
                 <td><button data-code="{{ song.code }}" id="{{ song.code }}-sign-up" class="sign-up-btn">Sign up</button></td>
+                {% endif %}
               </tr>
             {% endfor %}
           </tbody>

@@ -14,9 +14,18 @@
   <body>
   <div>
     <header>
+    
       <nav>
         <ul class="nav">
+          {% if current_user.is_authenticated %}
+          <p>{{ current_user.username }}</p>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
           <li><a href="{{ url_for('add_song') }}">Add Song</a></li>
+          {% else %}
+          <li><a href="{{ url_for('login') }}">Log in</a></li>
+          {% endif %}
           <li><a href="{{ url_for('index') }}">Song List</a></li>
           <li><a href="{{ url_for('view_performances') }}">Queue</a></li>
         </ul>

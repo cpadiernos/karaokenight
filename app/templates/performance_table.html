@@ -6,7 +6,9 @@
               <td class="col-head">TITLE</td>
               <td class="col-head">ARTIST</td>
               <td class="col-head">PERFORMER</td>
+              {% if current_user.is_authenticated %}
               <td class="col-head"></td>
+              {% endif %}
             </tr>
           </thead>
           <tbody>
@@ -16,11 +18,13 @@
                 <td>{{ performance.song.title }}</td>
                 <td>{% for artist in performance.song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
                 <td>{{ performance.name }}</td>
+                {% if current_user.is_authenticated %}
                 <td>
                 <form method="post">
                 <button data-id="{{ performance.id }}" class="snackbar-btn">Delete</button>
                 </form>
                 </td>
+                {% endif %}
               </tr>
             {% endfor %}
           </tbody>
