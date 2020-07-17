@@ -28,3 +28,4 @@ class Performance(db.Model):
     name = db.Column(db.String(100), nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey('song.id'),
         nullable=False)
+    completed = db.Column(db.Boolean(), default=False)

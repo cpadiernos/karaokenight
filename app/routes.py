@@ -39,8 +39,8 @@ def add_song():
     
 @app.route('/performances/')
 def view_performances():
-    performances = Performance.query.all()
-    return render_template('performance_list.html', performances=performances)
+    performances = Performance.query.filter_by(completed=False).all()
+    return render_template('performance_base.html', performances=performances)
     
 @app.route('/performances/<id>/delete/', methods=['POST'])
 def delete_performance(id):
@@ -48,3 +48,19 @@ def delete_performance(id):
     db.session.delete(performance)
     db.session.commit()
     return redirect(url_for('view_performances'))
+    
+@app.route('/performances/<id>/complete/', methods=['POST'])
+def mark_performance_completed(id):
+    performance = Performance.query.filter_by(id=id).first()
+    performance.completed = True
+    db.session.commit()
+    performances = Performance.query.filter_by(completed=False).all()
+    return render_template('performance_table.html', performances=performances)
+    
+@app.route('/performances/<id>/uncomplete/', methods=['POST'])
+def mark_performance_uncompleted(id):
+    performance = Performance.query.filter_by(id=id).first()
+    performance.completed = False
+    db.session.commit()
+    performances = Performance.query.filter_by(completed=False).all()
+    return render_template('performance_table.html', performances=performances)

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div id="table">
+        {% include 'performance_table.html' %}
+        </div>
+        <div id="snackbar">You deleted the performance. <a id="undo" href="#">undo</a></div>
+        <script>
+        var snackbar = document.getElementById("snackbar");
+        var undo = document.getElementById("undo");
+        
+        document.addEventListener('click', function (event) {
+          if (!event.target.matches('.snackbar-btn')) return;
+          event.preventDefault();
+          snackbar.className += "show";
+          undo.setAttribute('data-id', event.target.getAttribute('data-id'));
+          
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById('table').innerHTML = this.responseText;
+            }
+          }
+          var url = {{ url_for('view_performances') }} + event.target.getAttribute('data-id') + '/complete/';
+          xhttp.open('POST', url);
+          xhttp.send();
+          
+          setTimeout(function() {
+            snackbar.className = snackbar.className.replace("show", "");
+          }, 3000);
+        }, false);
+        
+        document.addEventListener('click', function (event) {
+          if (!event.target.matches('#undo')) return;
+          event.preventDefault();
+          
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById('table').innerHTML = this.responseText;
+            }
+          }
+          var url = {{ url_for('view_performances') }} + event.target.getAttribute('data-id') + '/uncomplete/';
+          xhttp.open('POST', url);
+          xhttp.send();
+        }, false);
+        </script>
+{% endblock %}

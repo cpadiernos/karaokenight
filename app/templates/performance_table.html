@@ -1,6 +1,3 @@
-{% extends "base.html" %}
-
-{% block content %}
         {% if performances %}
         <table class="table center">
           <thead>
@@ -20,8 +17,8 @@
                 <td>{% for artist in performance.song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
                 <td>{{ performance.name }}</td>
                 <td>
-                <form action="/performances/{{ performance.id }}/delete/" method="post">
-                  <button type="submit">Delete</button>
+                <form method="post">
+                <button data-id="{{ performance.id }}" class="snackbar-btn">Delete</button>
                 </form>
                 </td>
               </tr>
@@ -31,4 +28,3 @@
         {% else %}
            No performances!
         {% endif %}
-{% endblock %}
