@@ -20,7 +20,7 @@ class Song(db.Model):
     title = db.Column(db.String(100), nullable=False)
     artists = db.relationship('Artist', secondary=artists, lazy='subquery',
         backref=db.backref('songs', lazy=True))
-    performances = db.relationship('Performance', backref='song')
+    performances = db.relationship('Performance', cascade="all, delete", backref='song')
     
     def __repr__(self):
         return f'{self.title}'

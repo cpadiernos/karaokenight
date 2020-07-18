@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.models import Artist, Song, Performance, User
-from app.forms import SongForm, PerformanceForm, LoginForm
+from app.forms import SongForm, PerformanceForm, LoginForm, ConfirmDeleteForm
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -62,6 +62,17 @@ def edit_song(id):
         return redirect(url_for('index'))
     return render_template('song_form.html', title='Edit Song', form=form)
     
+@app.route('/songs/<id>/delete/', methods=['GET', 'POST'])
+@login_required
+def delete_song(id):
+    song = Song.query.filter_by(id=id).first_or_404()
+    form = ConfirmDeleteForm(obj=song)
+    if form.validate_on_submit():
+        db.session.delete(song)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('confirm_delete.html', title='Delete Song', form=form, song=song)
+
 @app.route('/performances/')
 def view_performances():
     performances = Performance.query.filter_by(completed=False).all()

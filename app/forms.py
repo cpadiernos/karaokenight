@@ -23,7 +23,6 @@ class SongForm(FlaskForm):
             if song is not None and song.id != int(self.id.data):
                 raise ValidationError('This code is already in the song book.')
             
-            
 class PerformanceForm(FlaskForm):
     code = HiddenField()
     name = StringField('Name', validators=[DataRequired()])
@@ -33,3 +32,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign In')
+
+class ConfirmDeleteForm(FlaskForm):
+    id = HiddenField()
+    submit = SubmitField('Delete')

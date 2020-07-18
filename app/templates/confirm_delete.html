@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  {{ song.title }} by 
+  {% for artist in song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}
+  <p>You sure you want to delete?</p>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+    <a href="#">Cancel</a> {{ form.submit() }}
+    </p>
+  </form>
+{% endblock %}
