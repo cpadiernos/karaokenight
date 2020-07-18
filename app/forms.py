@@ -8,15 +8,21 @@ class ArtistForm(Form):
     name = StringField('Name', validators=[DataRequired()])
     
 class SongForm(FlaskForm):
+    id = HiddenField()
     code = StringField('Code',validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     artists = FieldList(FormField(ArtistForm), min_entries=1)
     submit = SubmitField('Submit')
     
     def validate_code(self, code):
-        code = Song.query.filter_by(code=code.data).first()
-        if code is not None:
-            raise ValidationError('This code is already in the song book.')
+        song = Song.query.filter_by(code=code.data).first()
+        if not self.id.data:
+            if song is not None:
+                raise ValidationError('This code is already in the song book.')
+        if self.id.data:
+            if song is not None and song.id != int(self.id.data):
+                raise ValidationError('This code is already in the song book.')
+            
             
 class PerformanceForm(FlaskForm):
     code = HiddenField()

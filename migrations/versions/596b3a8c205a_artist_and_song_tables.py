@@ -26,7 +26,7 @@ def upgrade():
     )
     op.create_table('song',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('code', sa.String(length=100), nullable=False),
+    sa.Column('code', sa.String(length=100), unique=True, nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )

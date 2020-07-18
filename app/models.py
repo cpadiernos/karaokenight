@@ -16,7 +16,7 @@ class Artist(db.Model):
         
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(100), nullable=False)
+    code = db.Column(db.String(100), unique=True, nullable=False)
     title = db.Column(db.String(100), nullable=False)
     artists = db.relationship('Artist', secondary=artists, lazy='subquery',
         backref=db.backref('songs', lazy=True))

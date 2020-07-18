@@ -19,8 +19,7 @@
                 <td>{% for artist in song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
                 {% if current_user.is_authenticated %}
                 <td>
-                  <button data-code="{{ song.code }}" id="{{ song.code }}-edit" class="edit-btn">Edit</button>
-                  <button data-code="{{ song.code }}" id="{{ song.code }}-delete" class="delete-btn">Delete</button>
+                  <a href="{{ url_for('edit_song', id=song.id) }}">Edit</a>
                 </td>
                 {% else %}
                 <td><button data-code="{{ song.code }}" id="{{ song.code }}-sign-up" class="sign-up-btn">Sign up</button></td>

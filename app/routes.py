@@ -40,6 +40,28 @@ def add_song():
         return redirect(url_for('index'))
     return render_template('song_form.html', title='Add Song', form=form)
     
+@app.route('/songs/<id>/edit/', methods=['GET', 'POST'])
+@login_required
+def edit_song(id):
+    song = Song.query.filter_by(id=id).first_or_404()
+    form = SongForm(obj=song)
+    if form.validate_on_submit():
+        song.title = form.title.data
+        song.code = form.code.data
+        song.artists[:] = []
+        names = [artist['name']for artist in form.artists.data]
+        for name in names:
+            artist = Artist.query.filter_by(name=name).first()
+            if artist:
+                song.artists.append(artist)
+            else:
+                artist = Artist(name=name)
+                db.session.add(artist)
+                song.artists.append(artist)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template('song_form.html', title='Edit Song', form=form)
+    
 @app.route('/performances/')
 def view_performances():
     performances = Performance.query.filter_by(completed=False).all()
