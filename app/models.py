@@ -15,6 +15,7 @@ class Artist(db.Model):
         return f'{self.name}'
         
 class Song(db.Model):
+    __searchable__ = ['title', 'artists']
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(100), unique=True, nullable=False)
     title = db.Column(db.String(100), nullable=False)
