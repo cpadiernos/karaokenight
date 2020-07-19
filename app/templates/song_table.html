@@ -1,0 +1,31 @@
+        {% if songs %}
+        <table class="table center">
+          <thead>
+            <tr>
+              <td class="col-head">CODE</td>
+              <td class="col-head">TITLE</td>
+              <td class="col-head">ARTIST</td>
+              <td class="col-head"></td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for song in songs %}
+              <tr>
+                <td>{{ song.code }}</td>
+                <td>{{ song.title }}</td>
+                <td>{% for artist in song.artists %}{{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                {% if current_user.is_authenticated %}
+                <td>
+                  <a href="{{ url_for('edit_song', id=song.id) }}">Edit</a> | 
+                  <a href="{{ url_for('delete_song', id=song.id) }}">Delete</a>
+                </td>
+                {% else %}
+                <td><button data-code="{{ song.code }}" id="{{ song.code }}-sign-up" class="sign-up-btn">Sign up</button></td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+           No songs!
+        {% endif %}

@@ -1,9 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.models import Artist, Song, Performance, User
-from app.forms import SongForm, PerformanceForm, LoginForm, ConfirmDeleteForm
+from app.forms import SongForm, PerformanceForm, LoginForm, ConfirmDeleteForm, SearchForm
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from flask import g
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -123,3 +124,18 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+    
+@app.before_request
+def before_request():
+    g.search_form = SearchForm()
+    
+@app.route('/search/')
+def search():
+    songs, total = Song.search(g.search_form.q.data, 1, 100) # page 1, 100 records per page
+    if g.search_form.q.data == "":
+        songs = Song.query.all()
+        return render_template('song_table.html', songs=songs)
+    if total > 0: 
+        return render_template('song_table.html', songs=songs)
+    else:
+        return render_template('song_table.html', songs=False)

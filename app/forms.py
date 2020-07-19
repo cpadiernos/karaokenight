@@ -3,6 +3,7 @@ from wtforms import Form, FormField, StringField, SubmitField, FieldList, Hidden
 from wtforms import PasswordField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import Artist, Song
+from flask import request
 
 class ArtistForm(Form):
     name = StringField('Name', validators=[DataRequired()])
@@ -36,3 +37,14 @@ class LoginForm(FlaskForm):
 class ConfirmDeleteForm(FlaskForm):
     id = HiddenField()
     submit = SubmitField('Delete')
+    
+class SearchForm(FlaskForm):
+    q = StringField('Search song or artist', validators=[DataRequired()])
+    submit = SubmitField('Search')
+    
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)

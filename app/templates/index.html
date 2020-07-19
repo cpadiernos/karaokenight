@@ -1,37 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-        {% if songs %}
-        <table class="table center">
-          <thead>
-            <tr>
-              <td class="col-head">CODE</td>
-              <td class="col-head">TITLE</td>
-              <td class="col-head">ARTIST</td>
-              <td class="col-head"></td>
-            </tr>
-          </thead>
-          <tbody>
-            {% for song in songs %}
-              <tr>
-                <td>{{ song.code }}</td>
-                <td>{{ song.title }}</td>
-                <td>{% for artist in song.artists %} {{ artist }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-                {% if current_user.is_authenticated %}
-                <td>
-                  <a href="{{ url_for('edit_song', id=song.id) }}">Edit</a> | 
-                  <a href="{{ url_for('delete_song', id=song.id) }}">Delete</a>
-                </td>
-                {% else %}
-                <td><button data-code="{{ song.code }}" id="{{ song.code }}-sign-up" class="sign-up-btn">Sign up</button></td>
-                {% endif %}
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% else %}
-           No songs!
-        {% endif %}
+        <form action="{{ url_for('search')}}" method="get" id="search" novalidate>
+          {{ g.search_form.q(placeholder=g.search_form.q.label.text)}} {{ g.search_form.submit() }}
+        </form><br/>
+        <div id="table">
+          {% include 'song_table.html' %}
+        </div>
         <div id="sign-up-modal" class="modal">
           <div class="modal-content">
             <span class="close">&times;</span>
@@ -86,6 +61,26 @@
         if (document.getElementById("err-msg")) {
           modal.style.display = "block"
         }
+        
+        document.addEventListener('submit', function (event) {
+            if (!event.target.matches('#search')) return;
+            event.preventDefault();
+            var searchText = document.getElementById('q').value;
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById('table').innerHTML = this.responseText;
+                var searchForm = document.getElementById('search');
+                searchForm.reset();
+              }
+            }
+            
+            var url = {{ url_for('search')}} + "?q=" + searchText.split(' ').join('+');
+            
+            xhttp.open('GET', url);
+            xhttp.send();
+        }, false);
         
         </script>
 {% endblock %}
