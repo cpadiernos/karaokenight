@@ -1,6 +1,10 @@
 body {
-  font: normal 12px arial, sans-serif;
+  background-color: #121212;
+  color: #bdbdbd;
+  font: normal 16px arial, sans-serif;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 table.table, table tr.table, table td.table {
   border-collapse: collapse;
@@ -11,21 +15,18 @@ table.table, table tr.table, table td.table {
 }
 
 table.table td {
-  padding: 7px 7px 7px 7px;
+  padding: .35rem;
   border-spacing: 0;
-  border: #B4BED0 1px solid;
-  background-color: transparent;
+  background-color: #1e1e1e;
 }
 
-
 .table {
-  color: #000000;
-  border: #000000 1px solid;
 }
 
 table td.col-head {
   color: #FFFFFF;
-  background-color: #92A2C2;
+  background-color: #272727;
+  padding: .6rem .4rem;
 }
 
 table.center {
@@ -36,17 +37,45 @@ table.center {
 .nav {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 1rem 0;
   text-align: center;
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  width: 100%;
+  background-color: #121212;
 }
 
 .nav li {
   display: inline;
+  padding: .8rem 0.4rem;
 }
 
 .nav a {
   display: inline-block;
-  padding: 10px;
+  color: #c38fff;
+  text-decoration: none;
+  padding: 0.2rem;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+a.login {
+  color: #bdbdbd;
+}
+
+a.logout {
+  color: #bdbdbd;
+}
+
+.highlight {
+  color: #edae00;
+}
+
+main {
+  margin-top: 5.5rem;
 }
 
 .message {
@@ -67,11 +96,11 @@ table.center {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: #353535;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
+  border-radius: 6px;
 }
 
 .close {
@@ -89,18 +118,18 @@ table.center {
 }
 
 .error {
-  color: red;
+  color: #cf6679;
 }
 
 #snackbar {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
-  border-radius: 2px;
-  border: #d4b2bd 1px solid;
-  background-color: #c292a2;
+  border-radius: 6px;
+  border: #e1a0ac 1px solid;
+  background-color: #e1a0ac;
   color: #fff;
-  padding: 16px;
+  padding: 1rem;
   position: fixed;
   left: 50%;
   top: 5px;
@@ -127,4 +156,182 @@ table.center {
 
 #undo {
   color: red;
+}
+
+input {
+  padding: .5rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.btn-purple {
+  width: 4rem;
+  background-color:#c38fff;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-purple:hover {
+  background-color:#b576ff;
+}
+
+.btn-purple:active {
+  position:relative;
+  top:1px;
+}
+
+.btn-blue {
+  width: 4rem;
+  background-color:#03dac5;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-blue:hover {
+  background-color: #03c1ae;
+}
+
+.btn-blue:active {
+  position: relative;
+  top: 1px;
+}
+
+.btn-red {
+  width: 4rem;
+  background-color:#cf6679;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-red:hover {
+  background-color: #c95368;
+}
+
+.btn-red:active {
+  position: relative;
+  top: 1px;
+}
+
+a {
+  color: #c38fff;
+}
+
+.song-form {
+  left: 50vw;
+  min-width: 250px;
+  margin-left: -125px;
+  position: fixed;
+}
+
+.song-form .form-group {
+  text-align: right;
+}
+
+#sign-up-modal .btn-purple {
+  margin: .4rem 0;
+}
+
+.performance-grid {
+  max-width: 550px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+  grid-gap: 0.5rem;
+  padding: .6rem .4rem;
+  background-color: #1e1e1e;
+}
+
+.performance-grid label {
+  color: #FFFFFF;
+}
+
+.grid-header {
+  background-color: #272727;
+}
+
+@media (max-width: 600px) {
+  .performance-grid {
+    grid-template-columns: 1fr;
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 6px;
+  }
+  
+  .code {
+    order: 1;
+  }
+  
+  .title {
+    order: 2;
+  }
+  
+  .artist {
+    order: 3;
+  }
+  
+  .performer {
+    order: 4;
+  }
+  
+  .delete {
+    order: 5;
+  }
+
+  .grid-header {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 780px) {
+
+}
+
+@media screen and (max-width: 540px) {
+
+}
+
+@media screen and (max-width: 414px) {
+  .song-form {
+    margin-left: -130px;
+  }
+  
+  #snackbar {
+    margin-left: -130px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .song-form {
+    margin-left: -135px;
+  }
+  
+  #snackbar {
+    margin-left: -135px;
+  }
+  .nav li {
+    padding: .8rem 0.14rem;
+ }
+}
+
+@media screen and (max-width: 320px) {
+  .song-form {
+    margin-left: -140px;
+  }
+  
+  #snackbar {
+    margin-left: -140px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+
 }

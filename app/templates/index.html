@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+        <h2>Songs</h2>
         <form action="{{ url_for('search')}}" method="get" id="search" novalidate>
-          {{ g.search_form.q(placeholder=g.search_form.q.label.text)}} {{ g.search_form.submit() }}
+          {{ g.search_form.q(placeholder=g.search_form.q.label.text)}} <input class="btn-blue" id="submit" name="submit" type="submit" value="Search">
         </form><br/>
         <div id="table">
           {% include 'song_table.html' %}
@@ -13,17 +14,14 @@
               <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
                 <p>
-                  {{ form.code(size=50) }} <br/>
+                  {{ form.code(size=30) }} <br/>
                 </p>
                 <p>
                   {{ form.name.label }}: 
-                  {{ form.name(size=50) }} <br/>
+                  {{ form.name(size=30) }} <input class="btn-purple" id="submit" name="submit" type="submit" value="Submit"><br/>
                   {% for error in form.name.errors %}
                   <span id="err-msg" class="error">{{ error }}</span>
                   {% endfor %}
-                </p>
-                <p>
-                  {{ form.submit() }}
                 </p>
               </form>
           </div>
